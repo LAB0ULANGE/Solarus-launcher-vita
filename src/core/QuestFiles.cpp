@@ -22,6 +22,11 @@
 #include "solarus/lua/LuaContext.h"
 #include <physfs.h>
 #include <fstream>
+#include <algorithm>
+#ifdef __vita__
+#include <psp2/io/fcntl.h>
+void solarus_vita_splash_progress(float progress);  // cli/src/main.cpp
+#endif
 #include <cstdlib>  // exit(), mkstemp(), tmpnam()
 #include <cstdio>   // remove()
 #ifdef SOLARUS_HAVE_UNISTD_H
@@ -157,7 +162,49 @@ SOLARUS_API bool open_quest(const std::string& program_name, const std::string& 
   PHYSFS_permitSymbolicLinks(true);
 
   //quest path is a file, try to open it directly
+#ifdef __vita__
+  {
+    // VITA_MEMORY_MOUNT: reading the archive piece by piece from the memory
+    // card is very slow (seconds to open a big game, slow map loading).
+    // Load the whole .solarus file into memory once, then mount it from there.
+    bool mounted_from_memory = false;
+    const SceUID qfd = sceIoOpen(quest_path.c_str(), SCE_O_RDONLY, 0);
+    if (qfd >= 0) {
+      const SceOff qsize = sceIoLseek(qfd, 0, SCE_SEEK_END);
+      sceIoLseek(qfd, 0, SCE_SEEK_SET);
+      if (qsize > 0) {
+        char* qbuf = static_cast<char*>(malloc(static_cast<size_t>(qsize)));
+        if (qbuf != nullptr) {
+          SceOff done = 0;
+          while (done < qsize) {
+            const SceSize chunk = static_cast<SceSize>(std::min<SceOff>(1024 * 1024, qsize - done));
+            const int n = sceIoRead(qfd, qbuf + done, chunk);
+            if (n <= 0) {
+              break;
+            }
+            done += n;
+            ::solarus_vita_splash_progress(0.05f + 0.6f * static_cast<float>(done) / static_cast<float>(qsize));
+          }
+          if (done == qsize &&
+              PHYSFS_mountMemory(qbuf, static_cast<PHYSFS_uint64>(qsize), free, "quest.zip", nullptr, 1)) {
+            mounted_from_memory = true;
+          }
+          else {
+            free(qbuf);
+          }
+        }
+      }
+      sceIoClose(qfd);
+    }
+    FILE* dbg = fopen("ux0:data/solarus_debug.log", "a");
+    if (dbg) { fprintf(dbg, "SOLARUS_DEBUG: archive en memoire=%s\n", mounted_from_memory ? "oui" : "non"); fclose(dbg); }
+    if (!mounted_from_memory) {
+      PHYSFS_mount(quest_path.c_str(), nullptr, 1);
+    }
+  }
+#else
   PHYSFS_mount(quest_path.c_str(), nullptr , 1);
+#endif
 
   //quest path is a folder or anything else, do as usual
   std::string dir_quest_path = quest_path + "/data";
@@ -171,6 +218,26 @@ SOLARUS_API bool open_quest(const std::string& program_name, const std::string& 
   PHYSFS_mount((base_dir + "/" + dir_quest_path).c_str(), nullptr, 1);
   PHYSFS_mount((base_dir + "/" + archive_quest_path_1).c_str(), nullptr, 1);
   PHYSFS_mount((base_dir + "/" + archive_quest_path_2).c_str(), nullptr, 1);
+
+#ifdef __vita__
+  {
+    // Per-quest override folder, searched BEFORE the quest itself:
+    // ux0:data/Solarus/overrides/<quest file name without ".solarus">/
+    std::string override_name = quest_path;
+    size_t last_sep = override_name.find_last_of("/\\:");
+    if (last_sep != std::string::npos) {
+      override_name = override_name.substr(last_sep + 1);
+    }
+    size_t ext = override_name.rfind(".solarus");
+    if (ext != std::string::npos) {
+      override_name = override_name.substr(0, ext);
+    }
+    if (!override_name.empty() && override_name != ".") {
+      const std::string override_dir = "ux0:data/Solarus/overrides/" + override_name;
+      PHYSFS_mount(override_dir.c_str(), nullptr, 0);
+    }
+  }
+#endif
 
   // Set the engine root write directory.
   set_solarus_write_dir(SOLARUS_WRITE_DIR);
@@ -199,6 +266,27 @@ SOLARUS_API bool open_quest(const std::string& program_name, const std::string& 
     if (dbg) { fprintf(dbg, "SOLARUS_DEBUG: QE\n"); fclose(dbg); }  }
 
   set_quest_write_dir(CurrentQuest::get_properties().get_quest_write_dir());
+
+#ifdef __vita__
+  {
+    // VITA_OVERRIDES_BY_ID: replacement files chosen by the quest's own id
+    // (write_dir in quest.dat), so a renamed .solarus file still matches.
+    // Priority: ux0 (tests) > app0 (shipped in the VPK) > the quest itself.
+    const std::string quest_id = CurrentQuest::get_properties().get_quest_write_dir();
+    if (!quest_id.empty()) {
+      const std::string app_dir = "app0:overrides/" + quest_id;
+      const std::string ux_dir = "ux0:data/Solarus/overrides/" + quest_id;
+      const int app_ok = PHYSFS_mount(app_dir.c_str(), nullptr, 0);
+      const int ux_ok = PHYSFS_mount(ux_dir.c_str(), nullptr, 0);
+      FILE* dbg = fopen("ux0:data/solarus_debug.log", "a");
+      if (dbg) {
+        fprintf(dbg, "OVERRIDES id=%s app0=%s ux0=%s\n", quest_id.c_str(),
+            app_ok ? "oui" : "non", ux_ok ? "oui" : "non");
+        fclose(dbg);
+      }
+    }
+  }
+#endif
 
   return true;
 }

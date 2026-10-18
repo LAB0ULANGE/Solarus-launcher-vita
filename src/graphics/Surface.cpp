@@ -34,6 +34,9 @@
 
 #include <SDL_render.h>
 #include <SDL_image.h>
+#ifdef __vita__
+#include "solarus/graphics/sdlrenderer/SDLSurfaceImpl.h"
+#endif
 
 namespace Solarus {
 
@@ -184,7 +187,8 @@ SDL_Surface_UniquePtr Surface::create_sdl_surface_from_file(
   SDL_RWclose(rw);
 
   SOLARUS_REQUIRE(surface != nullptr,
-      std::string("Cannot load image '") + file_name + "'");
+      std::string("Cannot load image '") + file_name + "' (" +
+      std::to_string(buffer.size()) + " bytes): " + SDL_GetError());
 
   // Check if the surface is too large and emit a warning
   if (surface->w > 2048 || surface->h > 2048) {
@@ -286,7 +290,29 @@ SurfaceImplPtr Surface::get_surface_from_file(
   if (it != image_files_cache.end()) {
     texture = it->second;
   } else {
+#ifdef __vita__
+    // Vita: purge unused images (only the cache still holds them) to
+    // free video memory before loading a new one.
+    for (auto purge_it = image_files_cache.begin(); purge_it != image_files_cache.end();) {
+      if (purge_it->second.use_count() == 1) {
+        purge_it = image_files_cache.erase(purge_it);
+      }
+      else {
+        ++purge_it;
+      }
+    }
+#endif
     texture = Video::get_renderer().create_texture(create_sdl_surface_from_file(actual_file_name));
+#ifdef __vita__
+    // Tilesets are only drawn: free their CPU copy to save memory.
+    if (actual_file_name.size() > 10 &&
+        actual_file_name.compare(actual_file_name.size() - 10, 10, ".tiles.png") == 0) {
+      SDLSurfaceImpl* sdl_impl = dynamic_cast<SDLSurfaceImpl*>(texture.get());
+      if (sdl_impl != nullptr) {
+        sdl_impl->release_cpu_copy(actual_file_name);
+      }
+    }
+#endif
     image_files_cache[actual_file_name] = texture;
   }
   return texture;

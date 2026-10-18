@@ -1,0 +1,338 @@
+dialog{
+  id = "game_complete_3_1",
+  text = [[
+Encore toi ?
+]]
+}
+
+dialog{
+  id = "game_complete_3_2",
+  text = [[
+Alors au travail,
+tout de suite.
+]]
+}
+
+dialog{
+  id = "game_complete_2_1",
+  text = [[
+Merci d'avoir joué !
+]]
+}
+
+dialog{
+  id = "_treasure.shield.1",
+  text = [[
+Tu as le bouclier !
+]]
+}
+
+dialog{
+  id = "game_complete_1_1",
+  text = [[
+Te revoilà !
+]]
+}
+
+dialog{
+  id = "game_complete_1_2",
+  text = [[
+Regarde toutes les
+tuniques que je t'ai
+tricotées.
+]]
+}
+
+dialog{
+  id = "game_complete_1_3",
+  question = true, 
+  text = [[
+C'est fini ?
+  Oui
+  Encore !
+]]
+}
+
+dialog{
+  id = "game_complete_1_4",
+  text = [[
+Oh, flûte alors !
+]]
+}
+
+dialog{
+  id = "_treasure.heart_container.1",
+  text = [[
+Un réceptacle
+de cœur !
+]]
+}
+
+dialog{
+  id = "try_again",
+  question = true,
+  text = [[
+Réessayer ?
+  Volontiers
+  Non merci
+]]
+}
+
+dialog{
+  id = "game_over",
+  text = [[
+Partie terminée.
+Tu as X tuniques.
+]]
+}
+
+dialog{
+  id = "tier_complete",
+  text = [[
+Tunique terminée.
+Continue !
+]]
+}
+
+dialog{
+  id = "intro_1_1",
+  text = [[
+Hyrule est en paix.
+]]
+}
+
+dialog{
+  id = "intro_1_2",
+  text = [[
+Une belle journée
+pour un pique-nique...
+]]
+}
+
+dialog{
+  id = "intro_2_1",
+  text = [[
+Je te tricote
+une nouvelle tunique.
+]]
+}
+
+dialog{
+  id = "intro_2_2",
+  text = [[
+Hé !
+]]
+}
+
+dialog{
+  id = "intro_2_3",
+  text = [[
+Allô ?
+]]
+}
+
+dialog{
+  id = "intro_2_4",
+  text = [[
+Bon, je vais tricoter
+en attendant
+son retour.
+]]
+}
+
+dialog{
+  id = "intro_3_1",
+  text = [[
+Oh, un visiteur !
+Un petit biscuit ?
+]]
+}
+
+dialog{
+  id = "intro_3_2",
+  text = [[
+Un pique-nique royal ?
+Le plus court, c'est
+de monter l'escalier.
+
+Ah, encore une chose...
+]]
+}
+
+dialog{
+  id = "intro_3_3",
+  text = [[
+
+]]
+}
+
+dialog{
+  id = "intro_3_npc",
+  text = [[
+Allez, file.
+]]
+}
+
+dialog{
+  id = "_treasure.glove.1",
+  text =[[
+Tu as le gant !
+]]
+}
+
+dialog{
+  id = "_treasure.sword.1",
+  text = [[
+Il est dangereux
+d'y aller seul !
+Prends ceci.
+]]
+}
+
+dialog{
+  id = "_treasure.flippers.1",
+  text = [[
+Tu as les palmes !
+]]
+}
+
+dialog{
+  id = "_treasure.bow.1",
+  text = [[
+Tu as l'arc !
+]]
+}
+
+dialog{
+  id = "_treasure.lamp.1",
+  text = [[
+Tu as la lampe !
+]]
+}
+
+dialog{
+  id = "_treasure.bombs_counter.1",
+  text = [[
+Des bombes !
+]]
+}
+
+dialog{
+  id = "_treasure.hookshot.1",
+  text = [[
+Tu as le grappin !
+]]
+}
+
+dialog{
+  id = "_treasure.bigkey.1",
+  text = [[
+Tu as la grande clé !
+]]
+}
+
+dialog{
+  id = "_treasure.compass.1",
+  text = [[
+Tu as la boussole !
+]]
+}
+
+dialog{
+  id = "_treasure.map.1",
+  text = [[
+Tu as la carte !
+]]
+}
+
+dialog{
+  id = "_treasure.smallkey.1",
+  text = [[
+Une clé !
+]]
+}
+
+dialog{
+  id = "_item_description.bombs_counter.1",
+  icon = 1,
+  skip = "all",
+  text = [[
+Fais tout sauter
+avec les bombes.
+]]
+}
+
+dialog{
+  id = "_item_description.bow.1",
+  icon = 2,
+  skip = "all",
+  text = [[
+Tu n'as plus
+de flèches !
+]]
+}
+
+dialog{
+  id = "_item_description.bow.2",
+  icon = 3,
+  skip = "all",
+  text = [[
+N'oublie pas de
+t'entraîner au tir
+à l'arc.
+]]
+}
+
+dialog{
+  id = "_item_description.lamp.1",
+  icon = 5,
+  skip = "all",
+  text = [[
+Allume les torches
+avec la lampe.
+]]
+}
+
+dialog{
+  id = "_item_description.hookshot.1",
+  icon = 6,
+  skip = "all",
+  text = [[
+Atteins les endroits
+inaccessibles
+avec le grappin.
+]]
+}
+
+dialog{
+  id = "_item_description.flippers.1",
+  icon = "26",
+  skip = "all",
+  text = [[
+Nage en eaux
+profondes avec
+les palmes.
+]]
+}
+
+dialog{
+  id = "_item_description.glove.1",
+  icon = "32",
+  skip = "all",
+  text = [[
+Soulève les objets
+lourds avec
+les gants.
+]]
+}
+
+dialog{
+  id = "_big_key_required",
+  icon = 73,
+  skip = "all",
+  text = [[
+C'est fermé !
+Il te faut la
+grande clé.
+]]
+}

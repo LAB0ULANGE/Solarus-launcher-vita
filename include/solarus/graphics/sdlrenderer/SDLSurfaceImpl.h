@@ -23,6 +23,7 @@
 
 #include <SDL_render.h>
 #include <memory>
+#include <string>
 
 namespace Solarus {
 
@@ -49,7 +50,12 @@ public:
    * to upload it to the texture for changes to be reflected
    */
   void upload_surface() override;
+
+  // Frees the CPU copy of an image that is only drawn (it is reloaded
+  // from the quest file if some code asks for the pixels later).
+  void release_cpu_copy(const std::string& file_name);
 private:
+  std::string source_file;
   bool target = false;
   mutable bool surface_dirty = true;
   mutable SDL_Texture_UniquePtr texture;

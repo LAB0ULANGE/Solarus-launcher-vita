@@ -1,0 +1,320 @@
+dialog{
+  id = "_controls.heal",
+  text = [[
+Appuie sur Triangle pour te
+soigner avec une fiole de sang.
+20 au maximum, le reste ira
+dans la réserve.
+]],
+}
+
+dialog{
+  id = "_controls.lantern",
+  text = [[
+Communie avec le Rêve aux
+lanternes. Elles te soignent,
+mais les ennemis vaincus
+reviennent.
+]],
+}
+
+dialog{
+  id = "_controls.level_up",
+  text = [[
+Dépense tes Échos de sang pour
+monter de niveau à une lanterne,
+ou auprès de la Poupée dans le
+Rêve du chasseur.
+]],
+}
+
+dialog{
+  id = "_controls.move_talk",
+  text = [[
+Déplace-toi avec le stick ou les
+flèches. Appuie sur Croix pour
+agir ou faire une roulade.
+]],
+}
+
+dialog{
+  id = "_controls.pause",
+  text = [[
+Appuie sur START pour faire
+pause et sauvegarder. Tu
+repartiras de la dernière
+lanterne en rechargeant.
+]],
+}
+
+dialog{
+  id = "_controls.pistol",
+  text = [[
+Appuie sur Carré pour tirer au
+pistolet. Un tir juste avant un
+coup peut étourdir l'ennemi.
+]],
+}
+
+dialog{
+  id = "_controls.visceral",
+  text = [[
+Touche un ennemi au pistolet,
+ou frappe-le dans le dos avec
+une attaque chargée pour
+l'étourdir. Frappe-le alors
+pour une attaque viscérale.
+]],
+}
+
+dialog{
+  id = "_controls.weapon",
+  text = [[
+Appuie sur Rond pour frapper.
+Maintiens Rond pour charger
+une attaque.
+]],
+}
+
+dialog{
+  id = "_game.locked",
+  text = [[
+C'est verrouillé.
+]],
+}
+
+dialog{
+  id = "_game.not_enough_bloodstone",
+  text = [[
+Tu n'as pas assez de
+Pierres de sang.
+]],
+}
+
+dialog{
+  id = "_game.pause",
+  question = "1",
+  text = [[
+        - Pause -
+Sauvegarder et continuer
+Quitter
+]],
+}
+
+dialog{
+  id = "_game.rest_at_lantern",
+  question = "1",
+  text = [[
+Communier avec le Rêve ?
+Oui
+Non
+]],
+}
+
+dialog{
+  id = "_game.weapon_upgrade",
+  question = "1",
+  text = [[
+Améliorer l'arme ?
+Oui
+Non
+]],
+}
+
+dialog{
+  id = "_game.wrong_side",
+  text = [[
+Ne s'ouvre pas de ce côté.
+]],
+}
+
+dialog{
+  id = "_max.congrats",
+  text = [[
+Salut, moi c'est Max ! C'est la
+fin, merci d'avoir joué.
+]],
+}
+
+dialog{
+  id = "_npcs.doll.exit",
+  text = [[
+Puissiez-vous trouver votre
+valeur dans le monde éveillé.
+]],
+}
+
+dialog{
+  id = "_npcs.doll.welcome",
+  text = [[
+Bienvenue, bon chasseur. Que
+les Échos soient votre force.
+]],
+}
+
+dialog{
+  id = "_npcs.eileen.1",
+  text = [[
+Oh, un chasseurr, hein ? Dans
+quel pétrin tu t'es fourré. Et
+cette nuit, entre toutes...
+Prépare-toi au pire, il n'reste
+plus d'humains. Ce sont tous des
+bêtes, maintenant. Ça te trouble ?
+Heh, peu importe. Sans la peur,
+on ne vaut pas mieux que les
+bêtes elles-mêmes.
+]],
+}
+
+dialog{
+  id = "_npcs.eileen.2",
+  text = [[
+Eh bien, qu'est-ce que tu fais
+encore là ? Assez tremblé. Un
+chasseurr, ça doit chasser.
+]],
+}
+
+dialog{
+  id = "_shop.not_enough_echoes",
+  text = [[
+Pas assez d'Échos.
+]],
+}
+
+dialog{
+  id = "_shop.vials",
+  question = "1",
+  text = [[
+Fiole de sang : 170 Échos ?
+Oui
+Non
+]],
+}
+
+dialog{
+  id = "_test.1",
+  text = [[
+Portez ce vieux whisky au juge
+blond qui fume !
+]],
+}
+
+dialog{
+  id = "_treasure.blood_vial.1",
+  text = [[
+Tu as trouvé une fiole de sang.
+Un sang spécial, utilisé pour
+les soins. Rend des PV.
+]],
+}
+
+dialog{
+  id = "_treasure.blood_vial.2",
+  text = [[
+Tu as trouvé une fiole de sang.
+Un sang spécial, utilisé pour
+les soins. Rend des PV.
+]],
+}
+
+dialog{
+  id = "_treasure.blood_vial.3",
+  text = [[
+Tu as trouvé une fiole de sang.
+Un sang spécial, utilisé pour
+les soins. Rend des PV.
+]],
+}
+
+dialog{
+  id = "_treasure.blood_vial.4",
+  text = [[
+Tu as trouvé une fiole de sang.
+Un sang spécial, utilisé pour
+les soins. Rend des PV.
+]],
+}
+
+dialog{
+  id = "_treasure.bloodstone_shard.1",
+  text = [[
+Tu as trouvé un Éclat de pierre
+de sang, formé dans le sang
+froid. Incruste-le dans une
+arme pour la renforcer.
+]],
+}
+
+dialog{
+  id = "_treasure.bloodstone_shard.2",
+  text = [[
+Tu as trouvé des Éclats de pierre
+de sang, formés dans le sang
+froid. Incruste-les dans une
+arme pour la renforcer.
+]],
+}
+
+dialog{
+  id = "_treasure.bloodstone_shard.3",
+  text = [[
+Tu as trouvé des Éclats de pierre
+de sang, formés dans le sang
+froid. Incruste-les dans une
+arme pour la renforcer.
+]],
+}
+
+dialog{
+  id = "_treasure.dandelion_charm.1",
+  text = [[
+L'os d'un vieux chasseur dont le
+nom s'est perdu. On dit qu'il
+pratiquait l'art de l'Accélération,
+une technique propre aux premiers
+chasseurs.
+]],
+}
+
+dialog{
+  id = "_treasure.quicksilver_bullets.1",
+  text = [[
+Tu as trouvé des balles de
+vif-argent. Contre les bêtes,
+les armes à feu exigent du
+vif-argent.
+]],
+}
+
+dialog{
+  id = "_treasure.quicksilver_bullets.2",
+  text = [[
+Tu as trouvé des balles de
+vif-argent. Contre les bêtes,
+les armes à feu exigent du
+vif-argent.
+]],
+}
+
+dialog{
+  id = "_treasure.quicksilver_bullets.3",
+  text = [[
+Tu as trouvé des balles de
+vif-argent. Contre les bêtes,
+les armes à feu exigent du
+vif-argent.
+]],
+}
+
+dialog{
+  id = "_treasure.quicksilver_bullets.4",
+  text = [[
+Tu as trouvé des balles de
+vif-argent. Contre les bêtes,
+les armes à feu exigent du
+vif-argent.
+]],
+}
+

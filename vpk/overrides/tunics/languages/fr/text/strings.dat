@@ -1,0 +1,3 @@
+text{ key = "tier", value = "Palier " }
+text{ key = "completed", value = " terminé" }
+text{ key = "title_screen.press_space", value = "Appuie sur Croix pour commencer" }

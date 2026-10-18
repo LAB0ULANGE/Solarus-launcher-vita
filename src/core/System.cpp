@@ -36,6 +36,13 @@
 #  include "lowlevel/apple/AppleInterface.h"
 #endif
 
+#ifdef __vita__
+#include <psp2/kernel/processmgr.h>
+static unsigned vita_ms() {
+  return static_cast<unsigned>(sceKernelGetProcessTimeWide() / 1000);
+}
+#endif
+
 namespace Solarus {
 System::Clock::time_point System::initial_time;
 uint64_t System::ticks = 0;
@@ -52,7 +59,7 @@ uint64_t System::ticks = 0;
 void System::initialize(const Arguments& args, ResourceProvider& resource_provider) {
   {
     FILE* dbgf = fopen("ux0:data/solarus_debug.log", "a");
-    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: S1\n"); fclose(dbgf); }
+    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: [%u ms] S1\n", vita_ms()); fclose(dbgf); }
   }
 
 
@@ -75,7 +82,7 @@ void System::initialize(const Arguments& args, ResourceProvider& resource_provid
 
   {
     FILE* dbgf = fopen("ux0:data/solarus_debug.log", "a");
-    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: S2\n"); fclose(dbgf); }
+    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: [%u ms] S2\n", vita_ms()); fclose(dbgf); }
   }
   // configure a game controller database file if it exists
   const auto gcdb_filename = "gamecontrollerdb.txt";
@@ -111,13 +118,13 @@ void System::initialize(const Arguments& args, ResourceProvider& resource_provid
 
   {
     FILE* dbgf = fopen("ux0:data/solarus_debug.log", "a");
-    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: S3\n"); fclose(dbgf); }
+    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: [%u ms] S3\n", vita_ms()); fclose(dbgf); }
   }
   // initialize SDL
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
   {
     FILE* dbgf = fopen("ux0:data/solarus_debug.log", "a");
-    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: S4\n"); fclose(dbgf); }
+    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: [%u ms] S4\n", vita_ms()); fclose(dbgf); }
   }
 
   initial_time = Clock::now();
@@ -144,13 +151,13 @@ void System::initialize(const Arguments& args, ResourceProvider& resource_provid
 
   {
     FILE* dbgf = fopen("ux0:data/solarus_debug.log", "a");
-    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: S5\n"); fclose(dbgf); }
+    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: [%u ms] S5\n", vita_ms()); fclose(dbgf); }
   }
   // audio
   Sound::initialize(args, &resource_provider);
   {
     FILE* dbgf = fopen("ux0:data/solarus_debug.log", "a");
-    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: S6\n"); fclose(dbgf); }
+    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: [%u ms] S6\n", vita_ms()); fclose(dbgf); }
   }
 
 
@@ -162,13 +169,13 @@ void System::initialize(const Arguments& args, ResourceProvider& resource_provid
 
   {
     FILE* dbgf = fopen("ux0:data/solarus_debug.log", "a");
-    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: S7\n"); fclose(dbgf); }
+    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: [%u ms] S7\n", vita_ms()); fclose(dbgf); }
   }
   // video
   Video::initialize(args);
   {
     FILE* dbgf = fopen("ux0:data/solarus_debug.log", "a");
-    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: S8\n"); fclose(dbgf); }
+    if (dbgf) { fprintf(dbgf, "SOLARUS_DEBUG: [%u ms] S8\n", vita_ms()); fclose(dbgf); }
   }
 
   FontResource::initialize();

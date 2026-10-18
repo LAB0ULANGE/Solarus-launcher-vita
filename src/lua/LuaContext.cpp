@@ -1870,6 +1870,29 @@ bool LuaContext::on_input(const InputEvent& event) {
   }
   else if (event.is_joypad_event()) {
     // Joypad.
+    #ifdef __vita__
+    if (event.get_dpad_direction() != -2) {
+      static int dpad_mask = 0;
+      static const int dpad_table[16] = {-1,0,2,1,4,-1,3,-1,6,7,-1,-1,5,-1,-1,-1};
+      int bit = 1 << (event.get_dpad_direction() / 2);
+      if (event.is_joypad_button_pressed()) { dpad_mask |= bit; }
+      else { dpad_mask &= ~bit; }
+      if (find_method("on_joypad_hat_moved")) {
+        lua_pushinteger(current_l, 0);
+        lua_pushinteger(current_l, dpad_table[dpad_mask]);
+        push_joypad(current_l, *event.get_joypad());
+        bool success = call_function(4, 1, "on_joypad_hat_moved");
+        if (!success) {
+          handled = true;
+        }
+        else {
+          handled = lua_toboolean(current_l, -1) || handled;
+          lua_pop(current_l, 1);
+        }
+      }
+    }
+    else
+#endif
     if (event.is_joypad_button_pressed()) {
       handled = on_joypad_button_pressed(event) || handled;
     }

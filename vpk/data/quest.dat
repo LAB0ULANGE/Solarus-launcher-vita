@@ -1,0 +1,8 @@
+quest{
+  solarus_version = "2.0",
+  write_dir = "solarus-vita-launcher",
+  title_bar = "Solarus Launcher",
+  normal_quest_size = "960x544",
+  min_quest_size = "960x544",
+  max_quest_size = "960x544",
+}

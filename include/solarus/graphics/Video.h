@@ -123,6 +123,13 @@ namespace Video {
     Size get_output_size_no_bars();
 #ifdef __vita__
     void toggle_vita_stretch();
+    // Size: 0 centered, 1 enlarged, 2 stretched.
+    // Filter: 0 sharp, 1 smooth, 2 scanlines, 3 LCD grid.
+    void set_vita_display(int size_mode, int filter);
+    void cycle_vita_size(int delta);
+    void cycle_vita_filter(int delta);
+    int get_vita_size_mode();
+    int get_vita_filter();
 #endif
 
     void set_geometry_mode(Video::GeometryMode mode);

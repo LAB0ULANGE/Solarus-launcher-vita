@@ -20,3 +20,12 @@ if(UNIX AND NOT APPLE)
     DESTINATION "${SOLARUS_MANUAL_INSTALL_DESTINATION}/man6"
   )
 endif()
+
+# VITA_RT_CACHE: share GPU render targets (see cli/src/main.cpp)
+target_link_options(solarus-run PRIVATE "-Wl,--wrap=sceGxmCreateRenderTarget" "-Wl,--wrap=sceGxmDestroyRenderTarget")
+
+# VITA_CLOCKS: scePowerSet*ClockFrequency (see cli/src/main.cpp)
+target_link_libraries(solarus-run PRIVATE ScePower_stub)
+
+# Console language for the game list (sol.main.vita_get_language, src/lua/MainApi.cpp)
+target_link_libraries(solarus-run PRIVATE SceAppUtil_stub)

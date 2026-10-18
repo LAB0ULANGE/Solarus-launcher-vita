@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include <cstdio>
 #include "solarus/core/Arguments.h"
 #include "solarus/core/Debug.h"
 #include "solarus/core/InputEvent.h"
@@ -321,6 +322,54 @@ std::unique_ptr<InputEvent> InputEvent::get_event() {
         jbuttons_pressed.erase(internal_event.jbutton.button);
         break;
       }
+#ifdef __vita__
+      // Virtual keyboard: the Vita has no keyboard, but many quests build
+      // their menus around keys. Cross -> Return, Circle -> Escape.
+      // These keys are not bound to game commands by default, so only
+      // menus react to them. Create ux0:data/Solarus/nokeys.txt to disable.
+      case SDL_CONTROLLERBUTTONDOWN:
+      case SDL_CONTROLLERBUTTONUP:
+      {
+        static int keys_enabled = -1;
+        if (keys_enabled < 0) {
+          FILE* nk = fopen("ux0:data/Solarus/nokeys.txt", "r");
+          keys_enabled = 0;  // the engine converts the pad itself (MainLoop)
+          if (nk) {
+            fclose(nk);
+          }
+        }
+        SDL_Keycode fake_key = 0;
+        if (keys_enabled) {
+          switch (internal_event.cbutton.button) {
+            case SDL_CONTROLLER_BUTTON_A: fake_key = SDLK_RETURN; break;
+            case SDL_CONTROLLER_BUTTON_B: fake_key = SDLK_ESCAPE; break;
+            default: break;
+          }
+        }
+        if (fake_key != 0) {
+          const bool down = (internal_event.type == SDL_CONTROLLERBUTTONDOWN);
+          SDL_Event key_event;
+          SDL_zero(key_event);
+          key_event.type = down ? SDL_KEYDOWN : SDL_KEYUP;
+          key_event.key.state = down ? SDL_PRESSED : SDL_RELEASED;
+          key_event.key.repeat = 0;
+          key_event.key.keysym.sym = fake_key;
+          key_event.key.keysym.scancode = SDL_GetScancodeFromKey(fake_key);
+          key_event.key.keysym.mod = KMOD_NONE;
+          SDL_PushEvent(&key_event);
+        }
+        break;
+      }
+      // Rear touch pad (touch device 1): ignored, only the front screen
+      // is used, so that holding the console does not touch anything.
+      case SDL_FINGERDOWN:
+      case SDL_FINGERUP:
+      case SDL_FINGERMOTION:
+        if (internal_event.tfinger.touchId != 0) {
+          internal_event.type = SDL_FIRSTEVENT;  // Unknown event: nobody reacts.
+        }
+        break;
+#endif
       case SDL_MOUSEBUTTONDOWN:
         // Capture mouse movements outside the window
         // only while dragging.

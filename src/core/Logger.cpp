@@ -20,9 +20,25 @@
 #include <iostream>
 #include <SDL_log.h>
 
+#ifdef __vita__
+#include <cstdio>
+#endif
+
 namespace Solarus {
 
 namespace Logger {
+
+#ifdef __vita__
+// VITA_LOG_ERRORS: warnings and errors (including Lua script errors) are
+// copied into ux0:data/solarus_debug.log.
+static void vita_log_line(const std::string& message) {
+  FILE* f = fopen("ux0:data/solarus_debug.log", "a");
+  if (f) {
+    fprintf(f, "%s\n", message.c_str());
+    fclose(f);
+  }
+}
+#endif
 
 namespace {
 
@@ -90,6 +106,9 @@ SOLARUS_API void warning(const std::string& message) {
 
   std::string prefixed_message = "Warning: " + message;
   print(prefixed_message);
+#ifdef __vita__
+  vita_log_line(prefixed_message);
+#endif
 #ifdef SOLARUS_FILE_LOGGING
   print(prefixed_message, get_error_log_file());
 #endif
@@ -103,6 +122,9 @@ SOLARUS_API void error(const std::string& message) {
 
   std::string prefixed_message = "Error: " + message;
   print(prefixed_message);
+#ifdef __vita__
+  vita_log_line(prefixed_message);
+#endif
 #ifdef SOLARUS_FILE_LOGGING
   print(prefixed_message, get_error_log_file());
 #endif
@@ -116,6 +138,9 @@ SOLARUS_API void fatal(const std::string& message) {
 
   std::string prefixed_message = "Fatal: " + message;
   print(prefixed_message);
+#ifdef __vita__
+  vita_log_line(prefixed_message);
+#endif
 #ifdef SOLARUS_FILE_LOGGING
   print(prefixed_message, get_error_log_file());
 #endif

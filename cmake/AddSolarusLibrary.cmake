@@ -44,6 +44,12 @@ target_link_libraries(solarus
     bz2
     webpdemux
     webp
+    curl
+    ssl
+    crypto
+    zstd
+    SceNet_stub
+    SceNetCtl_stub SceShellSvc_stub
     SceAppMgr_stub
     SceKernelThreadMgr_stub
     SceAudioIn_stub

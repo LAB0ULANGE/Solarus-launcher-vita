@@ -219,6 +219,10 @@ static void set_shader(lua_State* L) {
       LuaTools::type_error(L, 2, "shader or nil");
     }
   }
+#ifdef __vita__
+  // VITA_NO_SHADERS: the SDL renderer of the Vita cannot run shaders.
+  shader = nullptr;
+#endif
   Video::set_shader(shader);
 }
 

@@ -111,18 +111,22 @@ int LuaContext::shader_api_create(lua_State* l) {
 
       shader = Video::get_renderer().create_shader(shader_id);
       SOLARUS_ASSERT(shader != nullptr, "Failed to create shader '" + shader_id + "'");
+#ifndef __vita__
       if (!shader->is_valid()) {
         LuaTools::error(l, "Failed to create shader: '" + shader_id + "': " + shader->get_error());
       }
+#endif
     }
     else if (lua_istable(l, 1)) {
       const std::string& vertex_source = LuaTools::opt_string_field(l, 1, "vertex_source", "");
       const std::string& fragment_source = LuaTools::opt_string_field(l, 1, "fragment_source", "");
       double scaling_factor = LuaTools::opt_number_field(l, 1, "scaling_factor", 0.0);
       shader = Video::get_renderer().create_shader(vertex_source, fragment_source, scaling_factor);
+#ifndef __vita__
       if (!shader->is_valid()) {
         LuaTools::error(l, "Failed to create shader: " + shader->get_error());
       }
+#endif
     }
     else {
       LuaTools::type_error(l, 1, "string or table");

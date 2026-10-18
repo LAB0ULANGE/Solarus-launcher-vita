@@ -19,8 +19,13 @@
 #include <SDL_render.h>
 #include <memory>
 
+extern "C" int solarus_vita_live_tex;
+extern "C" long long solarus_vita_live_bytes;
+
 struct SDL_Texture_Deleter {
     void operator()(SDL_Texture* texture) const {
+      --solarus_vita_live_tex;
+      { int qw = 0, qh = 0; SDL_QueryTexture(texture, nullptr, nullptr, &qw, &qh); solarus_vita_live_bytes -= (long long)qw * qh * 4; }
       SDL_DestroyTexture(texture);
     }
 };

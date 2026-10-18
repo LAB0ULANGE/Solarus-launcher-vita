@@ -44,6 +44,12 @@
 #include <SDL_render.h>
 #include <SDL_hints.h>
 
+#ifdef __vita__
+// Display filter of the Vita, used by SDLRenderer.cpp:
+// 0 = sharp pixels, 1 = smooth, 2 = scanlines, 3 = LCD grid.
+int solarus_vita_filter_mode = 0;
+#endif
+
 namespace Solarus {
 
 /**
@@ -177,11 +183,31 @@ void create_window(const Arguments& args) {
  */
 void initialize_software_video_modes() {
 
+#ifdef __vita__
+  // Normally the quest is shown twice as big (a 320x240 game becomes
+  // 640x480). A quest that is already big (like the game list, in 960x544)
+  // would not fit on the 960x544 screen any more: it is then shown 1:1.
+  Size normal_size = context.geometry.quest_size * 2;
+  if (normal_size.width > 960 || normal_size.height > 544) {
+    normal_size = context.geometry.quest_size;
+    if (normal_size.width > 960 || normal_size.height > 544) {
+      normal_size = Size{960, 544};
+    }
+  }
+  context.all_video_modes.emplace_back(
+        "normal",
+        normal_size,
+        nullptr
+        );
+#else
   context.all_video_modes.emplace_back(
         "normal",
         context.geometry.quest_size * 2,
         nullptr
         );
+#endif
+#ifndef __vita__
+  // The pixel filters give a black screen on PS Vita: keep only "normal".
   context.all_video_modes.emplace_back(
         "scale2x",
         context.geometry.quest_size * 2,
@@ -202,6 +228,7 @@ void initialize_software_video_modes() {
         context.geometry.quest_size * 4,
         std::unique_ptr<SoftwarePixelFilter>(new Hq4xFilter())
         );
+#endif
 
   context.default_video_mode = &context.all_video_modes[0];
 
@@ -945,17 +972,47 @@ Rectangle get_letter_box(const Size& basesize) {
  * @param size new window size
  */
 #ifdef __vita__
-static bool vita_stretched = false;
+// Size of the game on the Vita screen:
+// 0 = centered (twice the game size), 1 = enlarged (full height, keeping
+// the proportions), 2 = stretched (whole 960x544 screen).
+static int vita_size_mode = 0;
+
+static void apply_vita_size() {
+  if (context.video_mode == nullptr) {
+    return;
+  }
+  if (vita_size_mode == 0) {
+    on_window_resized(context.video_mode->get_initial_window_size());
+  } else {
+    on_window_resized(Size{960, 544});
+  }
+}
+
+void set_vita_display(int size_mode, int filter) {
+  vita_size_mode = (size_mode >= 0 && size_mode <= 2) ? size_mode : 1;
+  ::solarus_vita_filter_mode = (filter >= 0 && filter <= 3) ? filter : 0;
+  apply_vita_size();
+}
+
+void cycle_vita_size(int delta) {
+  vita_size_mode = (vita_size_mode + delta + 3) % 3;
+  apply_vita_size();
+}
+
+void cycle_vita_filter(int delta) {
+  ::solarus_vita_filter_mode = (::solarus_vita_filter_mode + delta + 4) % 4;
+}
+
+int get_vita_size_mode() {
+  return vita_size_mode;
+}
+
+int get_vita_filter() {
+  return ::solarus_vita_filter_mode;
+}
 
 void toggle_vita_stretch() {
-  vita_stretched = !vita_stretched;
-  // Stretched: the window surface covers the whole 960x544 screen.
-  // Normal: the current video mode's initial size, centered by SDLRenderer.
-  if (vita_stretched) {
-    on_window_resized(Size{960, 544});
-  } else {
-    on_window_resized(context.video_mode->get_initial_window_size());
-  }
+  cycle_vita_size(1);
 }
 #endif
 
@@ -963,7 +1020,10 @@ void on_window_resized(const Size& size) {
   switch (context.geometry.mode) {
   case Video::GeometryMode::LETTER_BOXING:{
 #ifdef __vita__
-    Rectangle letter = vita_stretched ? Rectangle(size) : get_letter_box(size);
+    // Enlarged and stretched: the whole screen is used (keeping or not the
+    // proportions of the game).
+    const Size vita_size = (vita_size_mode == 0) ? size : Size{960, 544};
+    Rectangle letter = (vita_size_mode == 2) ? Rectangle(vita_size) : get_letter_box(vita_size);
 #else
     Rectangle letter = get_letter_box(size);
 #endif

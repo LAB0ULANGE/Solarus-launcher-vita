@@ -288,6 +288,21 @@ class InputEvent {
     double get_joypad_axis_state() const;
     bool is_joypad_axis_centered() const;
     bool is_joypad_hat_moved() const;
+#ifdef __vita__
+    int get_dpad_direction() const {
+      if (internal_event.type != SDL_CONTROLLERBUTTONDOWN &&
+          internal_event.type != SDL_CONTROLLERBUTTONUP) {
+        return -2;
+      }
+      switch (internal_event.cbutton.button) {
+        case SDL_CONTROLLER_BUTTON_DPAD_RIGHT: return 0;
+        case SDL_CONTROLLER_BUTTON_DPAD_UP: return 2;
+        case SDL_CONTROLLER_BUTTON_DPAD_LEFT: return 4;
+        case SDL_CONTROLLER_BUTTON_DPAD_DOWN: return 6;
+        default: return -2;
+      }
+    }
+#endif
     int get_joypad_hat() const;
     int get_joypad_hat_direction() const;
     bool is_joypad_hat_centered() const;
