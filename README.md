@@ -18,9 +18,9 @@ Browse the free games published on solarus-games.org, download them and play the
 
 ## Screenshots
 
-| Game list | Game page | In game |
+| Game list | Loading a game | In-game engine menu (Select + L) |
 |---|---|---|
-| ![Game list](docs/screenshots/1.png) | ![Game page](docs/screenshots/2.png) | ![In game](docs/screenshots/3.png) |
+| ![Game list](docs/screenshots/launcher.jpg) | ![Loading a game](docs/screenshots/loading.jpg) | ![Engine menu](docs/screenshots/engine-menu.jpg) |
 
 ## Installation
 
