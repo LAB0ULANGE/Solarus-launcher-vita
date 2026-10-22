@@ -5,6 +5,8 @@
 A port of the [Solarus](https://www.solarus-games.org) 2.0 engine to the PlayStation Vita, with a built-in quest launcher.
 Browse the free games published on solarus-games.org, download them and play them directly on your Vita — no PC needed.
 
+**Current version: 2.0** (title ID `SOLR00002`).
+
 ![LiveArea](vpk/sce_sys/livearea/contents/bg.png)
 
 ## Screenshots
@@ -36,6 +38,12 @@ Browse the free games published on solarus-games.org, download them and play the
 
 An internet connection is needed to download games. Already downloaded games can be played offline.
 
+### Updating from Solarus Vita 1.x (Mystery of Solarus DX)
+
+Version 2.0 replaces the first port, [Solarus Vita](https://github.com/LAB0ULANGE/solarus-vita), which only contained Mystery of Solarus DX. It uses the same title ID (`SOLR00002`), so just install it over the old version with VitaShell.
+
+Your Mystery of Solarus DX saves are kept: both versions use the same folder, `ux0:data/.solarus/zsdx/`. Mystery of Solarus DX is no longer included in the package: download it once from the launcher (about 20 MB) and your saves will show up.
+
 ## Notes
 
 - Some games are hidden because they are too slow on the Vita for now, or already have a native Vita port (Return of the Hylian SE).
@@ -66,6 +74,8 @@ This project is not affiliated with Nintendo or Sony.
 Un portage du moteur [Solarus](https://www.solarus-games.org) 2.0 sur PlayStation Vita, avec un lanceur de jeux intégré.
 Parcourez les jeux gratuits publiés sur solarus-games.org, téléchargez-les et jouez-y directement sur votre Vita, sans passer par un PC.
 
+**Version actuelle : 2.0** (title ID `SOLR00002`).
+
 ### Fonctionnalités
 
 - Moteur Solarus 2.0.3 qui tourne nativement sur la Vita
@@ -84,6 +94,12 @@ Parcourez les jeux gratuits publiés sur solarus-games.org, téléchargez-les et
 3. Lancez **Solarus Launcher**, choisissez un jeu et appuyez sur X pour le télécharger.
 
 Une connexion internet est nécessaire pour télécharger les jeux. Les jeux déjà téléchargés se jouent hors ligne.
+
+### Mise à jour depuis Solarus Vita 1.x (Mystery of Solarus DX)
+
+La version 2.0 remplace le premier portage, [Solarus Vita](https://github.com/LAB0ULANGE/solarus-vita), qui ne contenait que Mystery of Solarus DX. Elle utilise le même title ID (`SOLR00002`) : il suffit de l'installer par-dessus l'ancienne version avec VitaShell.
+
+Vos sauvegardes de Mystery of Solarus DX sont conservées : les deux versions utilisent le même dossier, `ux0:data/.solarus/zsdx/`. Mystery of Solarus DX n'est plus inclus dans le paquet : téléchargez-le une fois depuis le lanceur (environ 20 Mo) et vos sauvegardes réapparaîtront.
 
 ### Remarques
 
