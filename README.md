@@ -5,7 +5,7 @@
 A port of the [Solarus](https://www.solarus-games.org) 2.0 engine to the PlayStation Vita, with a built-in quest launcher.
 Browse the free games published on solarus-games.org, download them and play them directly on your Vita — no PC needed.
 
-**Current version: 2.0** (title ID `SOLR00002`).
+**Current version: 2.1** (title ID `SOLR00002`).
 
 ![LiveArea](vpk/sce_sys/livearea/contents/bg.png)
 
@@ -74,7 +74,7 @@ This project is not affiliated with Nintendo or Sony.
 Un portage du moteur [Solarus](https://www.solarus-games.org) 2.0 sur PlayStation Vita, avec un lanceur de jeux intégré.
 Parcourez les jeux gratuits publiés sur solarus-games.org, téléchargez-les et jouez-y directement sur votre Vita, sans passer par un PC.
 
-**Version actuelle : 2.0** (title ID `SOLR00002`).
+**Version actuelle : 2.1** (title ID `SOLR00002`).
 
 ### Fonctionnalités
 

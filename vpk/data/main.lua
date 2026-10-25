@@ -1005,6 +1005,8 @@ local function activate()
       table.insert(thumb_queue, 1, thumb_current)
       thumb_current = nil
     end
+    sol.main.vita_make_dir("ux0:data/Solarus")
+    sol.main.vita_make_dir(QUESTS_DIR)
     if sol.main.vita_download_start(game.url, QUESTS_DIR .. game.file) then
       state = "downloading"
       message = T.downloading
@@ -1239,10 +1241,15 @@ function menu:on_update()
     elseif st.state == "done" then
       finish_loading()
     elseif st.state == "error" then
+      -- Show why, to make bug reports easier.
+      local reason = st.error or "?"
+      if #reason > 60 then
+        reason = reason:sub(1, 57) .. "..."
+      end
       if sol.main.vita_file_size(INDEX_PATH) then
-        finish_loading(T.offline_saved)
+        finish_loading(T.offline_saved .. " (" .. reason .. ")")
       else
-        use_fallback(T.offline)
+        use_fallback(T.offline .. " (" .. reason .. ")")
       end
     end
     return
@@ -1512,6 +1519,12 @@ function menu:on_draw(dst)
 end
 
 function sol.main:on_started()
+  -- On a Vita that never had Solarus, nothing exists yet in ux0:data:
+  -- create the folders before downloading anything into them.
+  sol.main.vita_make_dir("ux0:data/Solarus")
+  sol.main.vita_make_dir(QUESTS_DIR)
+  sol.main.vita_make_dir(THUMBS_DIR)
+  sol.main.vita_make_dir("ux0:data/Solarus/keymaps")
   sol.menu.start(sol.main, menu)
   -- Music of the game list: data/musics/menu.ogg, if present.
   if sol.main.vita_file_size("app0:data/musics/menu.ogg") ~= nil then
